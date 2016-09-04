@@ -1,5 +1,7 @@
 package ro.fortsoft.elk.testdata.generator.event;
 
+import net.logstash.logback.argument.StructuredArgument;
+import net.logstash.logback.argument.StructuredArguments;
 import net.logstash.logback.marker.Markers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +32,8 @@ public class LoginEvent extends BaseEvent {
         String username = randomUsername();
 
         if(randomIp < MIN_VALID_LOGIN_IP) {
-            log.info(ipMarker, "SUCCESS login for user='{}'", username);
+            StructuredArgument userNameArgument = StructuredArguments.value("userName", username);
+            log.info(ipMarker, "SUCCESS login for user='{}'", userNameArgument);
         } else {
             log.error(ipMarker, "FAILED login for user='{}'", username);
         }
