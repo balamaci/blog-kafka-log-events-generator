@@ -18,6 +18,6 @@ public class AddProductToCartEvent extends BaseProductEvent {
 
     @Override
     public void doWork(long eventCount) {
-        log.info("Product {} added to cart", randomProduct());
+        log.info(randomBrowserHashMarker(), "Added ProductId={} to cart", randomProduct());
     }
 }

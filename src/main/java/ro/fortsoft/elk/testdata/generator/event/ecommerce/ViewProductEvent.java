@@ -1,13 +1,16 @@
 package ro.fortsoft.elk.testdata.generator.event.ecommerce;
 
 import com.typesafe.config.Config;
-import ro.fortsoft.elk.testdata.generator.event.ecommerce.base.BaseECommerceEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ro.fortsoft.elk.testdata.generator.event.ecommerce.base.BaseProductEvent;
 
 /**
  * @author sbalamaci
  */
-public class ViewProductEvent extends BaseECommerceEvent {
+public class ViewProductEvent extends BaseProductEvent {
 
+    private static final Logger log = LoggerFactory.getLogger(ViewProductEvent.class);
 
     public ViewProductEvent(Config config) {
         super(config);
@@ -15,5 +18,6 @@ public class ViewProductEvent extends BaseECommerceEvent {
 
     @Override
     public void doWork(long eventCount) {
+        log.info(randomBrowserHashMarker(), "Viewed ProductId={}", randomProduct());
     }
 }
