@@ -5,12 +5,12 @@ import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ro.fortsoft.elk.testdata.generator.event.base.BaseEvent;
 import ro.fortsoft.elk.testdata.generator.event.builder.EventBuilder;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.IntStream;
 
 /**
  * @author sbalamaci
@@ -35,9 +35,10 @@ public class Start {
         */
         ExecutorService executorService = Executors.newFixedThreadPool(numberOfConcurrentThreads);
 
-        IntStream.rangeClosed(0, numberOfEvents)
-                .mapToObj(eventBuilder::randomEvent)
-                .forEach(executorService::submit);
+        for(int i=0; i < numberOfEvents; i++) {
+            BaseEvent randomEvent = eventBuilder.randomEvent();
+            executorService.submit(randomEvent);
+        }
 
         //since all the jobs have been submitted we notify the pool that it can shutdown
         executorService.shutdown();

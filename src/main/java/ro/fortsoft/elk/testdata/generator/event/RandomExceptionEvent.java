@@ -20,7 +20,7 @@ public class RandomExceptionEvent extends BaseEvent {
 
 
     @Override
-    public void doWork() {
+    public void doWork(long eventCount) {
         try {
             randomException();
         } catch (Exception e) {

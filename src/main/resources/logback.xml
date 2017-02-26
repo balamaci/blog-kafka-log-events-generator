@@ -22,7 +22,7 @@
                     <pattern>
                         <pattern>
                             {
-                            "appName": "elk-testdata",
+                            "appName": "testdata",
                             "appVersion": "1.0"
                             }
                         </pattern>
@@ -47,7 +47,8 @@
         <!-- each <producerConfig> translates to regular kafka-client config (format: key=value) -->
         <!-- producer configs are documented here: https://kafka.apache.org/documentation.html#newproducerconfigs -->
         <!-- bootstrap.servers is the only mandatory producerConfig -->
-        <producerConfig>bootstrap.servers=localhost:9092</producerConfig>
+        <producerConfig>bootstrap.servers=172.18.0.2:9092</producerConfig>
+        <!--<producerConfig>value.serializer=org.apache.kafka.common.serialization.StringSerializer</producerConfig>-->
 
     </appender>
     <!---->
@@ -62,10 +63,10 @@
     <!---->
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>./log/elk-file.log</file>
+        <file>./log/events-file.log</file>
         <append>true</append>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>./log/elk-file.log.%d{yyyyMMdd}-%i
+            <fileNamePattern>./log/events-file.log.%d{yyyyMMdd}-%i
             </fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>256MB</maxFileSize>
@@ -83,11 +84,14 @@
         <appender-ref ref="STASH"/>
     </logger>
 
+    <logger name="org.apache.kafka" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
     <!-- ROOT logger setup -->
     <root level="INFO">
         <appender-ref ref="FILE"/>
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="STASH"/>
     </root>
 
 </configuration>

@@ -29,14 +29,14 @@ public class EventBuilder {
         jobs = new EnumeratedDistribution<>(jobsWithProb);
     }
 
-    public BaseEvent randomEvent(Integer eventNumber) {
+    public BaseEvent randomEvent(Config config) {
         JobInfo jobInfo = jobs.sample();
-        return createEvent(jobInfo.getJobClass());
+        return createEvent(jobInfo.getJobClass(), config);
     }
 
-    private BaseEvent createEvent(Class cls) {
+    private BaseEvent createEvent(Class cls, Config config) {
         try {
-            return (BaseEvent) cls.newInstance();
+            return (BaseEvent) cls.getConstructor(Config.class).newInstance();
         } catch (Exception e) {
             throw new RuntimeException("Could not create instance of BaseEvent " + cls.getName(), e);
         }

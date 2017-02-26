@@ -1,5 +1,6 @@
-package ro.fortsoft.elk.testdata.generator.event;
+package ro.fortsoft.elk.testdata.generator.event.ecommerce;
 
+import com.typesafe.config.Config;
 import net.logstash.logback.argument.StructuredArguments;
 import org.apache.commons.math3.distribution.EnumeratedDistribution;
 import org.apache.commons.math3.util.Pair;
@@ -20,15 +21,20 @@ public class SubmitOrderEvent extends BaseEvent {
 
     private static final Logger log = LoggerFactory.getLogger(SubmitOrderEvent.class);
 
+    public SubmitOrderEvent(Config config) {
+        super(config);
+    }
+
     @Override
-    public void doWork() {
+    public void doWork(long eventCount) {
         MDC.put("username", randomUsername()); //we just show that it's easy to place as MDC variables
         MDC.put("store", randomStore().name); //and get the values in the log without explicit adding
 
         log.info("User submitted order with total amount={}",
                 StructuredArguments.value("orderAmount", randomOrderValue()));
 
-        MDC.clear();
+        MDC.remove("username");
+        MDC.remove("store");
     }
 
     private int randomOrderValue() {

@@ -1,5 +1,6 @@
 package ro.fortsoft.elk.testdata.generator.event;
 
+import com.typesafe.config.Config;
 import net.logstash.logback.argument.StructuredArgument;
 import net.logstash.logback.argument.StructuredArguments;
 import net.logstash.logback.marker.Markers;
@@ -22,12 +23,13 @@ public class LoginEvent extends BaseEvent {
 
     private int randomIp;
 
-    public LoginEvent() {
+    public LoginEvent(Config config) {
+        super(config);
         randomIp = ThreadLocalRandom.current().nextInt(0, 192);
     }
 
     @Override
-    public void doWork() {
+    public void doWork(long eventCount) {
         Marker ipMarker = Markers.append("remoteIP", ipNetworkPattern + randomIp);
         String username = randomUsername();
 
