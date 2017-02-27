@@ -1,4 +1,4 @@
-package ro.fortsoft.elk.testdata.generator.event.base;
+package ro.fortsoft.kafka.testdata.generator.event.base;
 
 import com.typesafe.config.Config;
 import io.codearte.jfairy.Fairy;
@@ -19,9 +19,11 @@ public abstract class BaseEvent implements Runnable {
     private static AtomicLong eventCounter = new AtomicLong(0);
 
     protected Config config;
+    protected String jobName;
 
-    public BaseEvent(Config config) {
+    public BaseEvent(Config config, String jobName) {
         this.config = config;
+        this.jobName = jobName;
     }
 
     public abstract void doWork(long eventCount);

@@ -1,9 +1,9 @@
-package ro.fortsoft.elk.testdata.generator.event.ecommerce.base;
+package ro.fortsoft.kafka.testdata.generator.event.ecommerce.base;
 
 import com.typesafe.config.Config;
 import net.logstash.logback.marker.Markers;
 import org.slf4j.Marker;
-import ro.fortsoft.elk.testdata.generator.event.base.BaseEvent;
+import ro.fortsoft.kafka.testdata.generator.event.base.BaseEvent;
 
 /**
  * @author sbalamaci
@@ -14,9 +14,9 @@ public abstract class BaseECommerceEvent extends BaseEvent {
 
     private int maxUniqueBrowsers;
 
-    public BaseECommerceEvent(Config config) {
-        super(config);
-        this.maxUniqueBrowsers = config.getInt("maxUniqueBrowsers");
+    public BaseECommerceEvent(Config config, String jobName) {
+        super(config, jobName);
+        this.maxUniqueBrowsers = config.getInt(jobName + ".maxUniqueBrowsers");
     }
 
     protected String randomBrowserHash() {

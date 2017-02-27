@@ -1,4 +1,4 @@
-package ro.fortsoft.elk.testdata.generator.event.ecommerce.base;
+package ro.fortsoft.kafka.testdata.generator.event.ecommerce.base;
 
 import com.typesafe.config.Config;
 import net.logstash.logback.argument.StructuredArgument;
@@ -11,9 +11,9 @@ public abstract class BaseProductEvent extends BaseECommerceEvent {
 
     private int maxProducts;
 
-    public BaseProductEvent(Config config) {
-        super(config);
-        this.maxProducts = config.getInt("maxProducts");
+    public BaseProductEvent(Config config, String jobName) {
+        super(config, jobName);
+        this.maxProducts = config.getInt(jobName + ".maxProducts");
     }
 
     protected Integer randomProduct() {

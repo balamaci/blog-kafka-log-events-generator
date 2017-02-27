@@ -1,11 +1,11 @@
-package ro.fortsoft.elk.testdata.generator.event.builder;
+package ro.fortsoft.kafka.testdata.generator.event.builder;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigValue;
 import org.apache.commons.math3.distribution.EnumeratedDistribution;
 import org.apache.commons.math3.util.Pair;
-import ro.fortsoft.elk.testdata.generator.config.JobInfo;
-import ro.fortsoft.elk.testdata.generator.event.base.BaseEvent;
+import ro.fortsoft.kafka.testdata.generator.config.JobInfo;
+import ro.fortsoft.kafka.testdata.generator.event.base.BaseEvent;
 
 import java.util.List;
 import java.util.Map;
@@ -31,14 +31,16 @@ public class EventBuilder {
 
     public BaseEvent randomEvent(Config config) {
         JobInfo jobInfo = jobs.sample();
-        return createEvent(jobInfo.getJobClass(), config);
+        return createEvent(jobInfo, config);
     }
 
-    private BaseEvent createEvent(Class cls, Config config) {
+    private BaseEvent createEvent(JobInfo jobInfo, Config config) {
+        Class jobClass = jobInfo.getJobClass();
         try {
-            return (BaseEvent) cls.getConstructor(Config.class).newInstance();
+            return (BaseEvent) jobClass.getConstructor(Config.class, String.class)
+                    .newInstance(config, jobInfo.getJobName());
         } catch (Exception e) {
-            throw new RuntimeException("Could not create instance of BaseEvent " + cls.getName(), e);
+            throw new RuntimeException("Could not create instance of BaseEvent " + jobClass.getName(), e);
         }
     }
 
@@ -50,7 +52,7 @@ public class EventBuilder {
 
         try {
             Class<?> cls = Class.forName(jobClass);
-            return new Pair<>(new JobInfo(cls), jobProbability);
+            return new Pair<>(new JobInfo(cls, jobName), jobProbability);
         } catch (Exception e) {
             throw new RuntimeException("Error creating Event class='" + jobClass + "'", e);
         }

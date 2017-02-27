@@ -65,11 +65,11 @@ The number and type of events and is configured in the **[jobs.conf](https://git
  }
  
  login {
-    class : ro.fortsoft.elk.testdata.generator.event.LoginEvent
+    class : ro.fortsoft.kafka.testdata.generator.event.LoginEvent
  }
  
  submit {
-    class : ro.fortsoft.elk.testdata.generator.event.ecommerce.SubmitOrderEvent
+    class : ro.fortsoft.kafka.testdata.generator.event.ecommerce.SubmitOrderEvent
  }
  ```
 you can create and add your own event by extending **[BaseEvent](https://github.com/balamaci/blog-elk-docker/blob/master/src/main/java/ro/fortsoft/elk/testdata/generator/event/base/BaseEvent.java)** and adding it to the list of jobs. 

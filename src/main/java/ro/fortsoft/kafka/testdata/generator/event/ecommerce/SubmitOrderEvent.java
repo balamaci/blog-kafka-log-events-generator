@@ -1,4 +1,4 @@
-package ro.fortsoft.elk.testdata.generator.event.ecommerce;
+package ro.fortsoft.kafka.testdata.generator.event.ecommerce;
 
 import com.typesafe.config.Config;
 import net.logstash.logback.argument.StructuredArguments;
@@ -7,7 +7,7 @@ import org.apache.commons.math3.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
-import ro.fortsoft.elk.testdata.generator.event.base.BaseEvent;
+import ro.fortsoft.kafka.testdata.generator.event.base.BaseEvent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,8 +21,8 @@ public class SubmitOrderEvent extends BaseEvent {
 
     private static final Logger log = LoggerFactory.getLogger(SubmitOrderEvent.class);
 
-    public SubmitOrderEvent(Config config) {
-        super(config);
+    public SubmitOrderEvent(Config config, String jobName) {
+        super(config, jobName);
     }
 
     @Override

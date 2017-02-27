@@ -1,12 +1,12 @@
-package ro.fortsoft.elk.testdata.generator;
+package ro.fortsoft.kafka.testdata.generator;
 
 import ch.qos.logback.classic.LoggerContext;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ro.fortsoft.elk.testdata.generator.event.base.BaseEvent;
-import ro.fortsoft.elk.testdata.generator.event.builder.EventBuilder;
+import ro.fortsoft.kafka.testdata.generator.event.base.BaseEvent;
+import ro.fortsoft.kafka.testdata.generator.event.builder.EventBuilder;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -36,7 +36,7 @@ public class Start {
         ExecutorService executorService = Executors.newFixedThreadPool(numberOfConcurrentThreads);
 
         for(int i=0; i < numberOfEvents; i++) {
-            BaseEvent randomEvent = eventBuilder.randomEvent();
+            BaseEvent randomEvent = eventBuilder.randomEvent(config);
             executorService.submit(randomEvent);
         }
 

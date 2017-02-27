@@ -1,10 +1,11 @@
-package ro.fortsoft.elk.testdata.generator.event;
+package ro.fortsoft.kafka.testdata.generator.event;
 
+import com.typesafe.config.Config;
 import org.apache.commons.math3.distribution.EnumeratedDistribution;
 import org.apache.commons.math3.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ro.fortsoft.elk.testdata.generator.event.base.BaseEvent;
+import ro.fortsoft.kafka.testdata.generator.event.base.BaseEvent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +18,10 @@ import java.util.stream.Collectors;
 public class RandomExceptionEvent extends BaseEvent {
 
     private static final Logger log = LoggerFactory.getLogger(RandomExceptionEvent.class);
+
+    public RandomExceptionEvent(Config config, String jobName) {
+        super(config, jobName);
+    }
 
 
     @Override

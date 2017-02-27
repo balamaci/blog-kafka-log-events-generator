@@ -1,4 +1,4 @@
-package ro.fortsoft.elk.testdata.generator.event;
+package ro.fortsoft.kafka.testdata.generator.event;
 
 import com.typesafe.config.Config;
 import net.logstash.logback.argument.StructuredArgument;
@@ -7,7 +7,7 @@ import net.logstash.logback.marker.Markers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
-import ro.fortsoft.elk.testdata.generator.event.base.BaseEvent;
+import ro.fortsoft.kafka.testdata.generator.event.base.BaseEvent;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -23,8 +23,8 @@ public class LoginEvent extends BaseEvent {
 
     private int randomIp;
 
-    public LoginEvent(Config config) {
-        super(config);
+    public LoginEvent(Config config, String jobName) {
+        super(config, jobName);
         randomIp = ThreadLocalRandom.current().nextInt(0, 192);
     }
 

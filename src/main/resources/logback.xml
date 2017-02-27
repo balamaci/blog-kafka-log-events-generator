@@ -57,7 +57,7 @@
     <!-- Debugging appender (duplicates the normal log, PLUS any debug messages) -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%date{ISO8601} %level{5} %c{3} - %message%n</pattern>
+            <pattern>%date{ISO8601} %c{3} [%mdc{eventId}] - %message%n</pattern>
         </encoder>
     </appender>
     <!---->
@@ -78,7 +78,7 @@
     </appender>
 
 
-    <logger name="ro.fortsoft.elk.testdata" level="INFO" additivity="false">
+    <logger name="ro.fortsoft.kafka.testdata" level="INFO" additivity="false">
         <appender-ref ref="FILE"/>
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="STASH"/>
