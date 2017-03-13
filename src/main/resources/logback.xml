@@ -47,8 +47,8 @@
         <!-- each <producerConfig> translates to regular kafka-client config (format: key=value) -->
         <!-- producer configs are documented here: https://kafka.apache.org/documentation.html#newproducerconfigs -->
         <!-- bootstrap.servers is the only mandatory producerConfig -->
-        <producerConfig>bootstrap.servers=172.18.0.2:9092</producerConfig>
-        <!--<producerConfig>value.serializer=org.apache.kafka.common.serialization.StringSerializer</producerConfig>-->
+        <producerConfig>bootstrap.servers=${KAFKA_BOOTSTRAP_SERVERS}</producerConfig>
+        <!--<producerConfig>partitioner.class=ro.fortsoft.kafka.partitioner.KafkaCustomPartionStrategy</producerConfig>-->
 
     </appender>
     <!---->
@@ -80,8 +80,8 @@
 
     <logger name="ro.fortsoft.kafka.testdata" level="INFO" additivity="false">
         <appender-ref ref="FILE"/>
-        <appender-ref ref="CONSOLE"/>
         <appender-ref ref="STASH"/>
+        <appender-ref ref="CONSOLE"/>
     </logger>
 
     <logger name="org.apache.kafka" level="INFO" additivity="false">

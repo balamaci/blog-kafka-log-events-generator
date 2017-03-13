@@ -18,6 +18,6 @@ public class ViewProductEvent extends BaseProductEvent {
 
     @Override
     public void doWork(long eventCount) {
-        log.info(randomBrowserHashMarker(), "ProductId={} Viewed", randomProductStructuredArg());
+        log.info("ProductId={} Viewed Browser={}", randomProductStructuredArg(), randomBrowserStructuredArg());
     }
 }

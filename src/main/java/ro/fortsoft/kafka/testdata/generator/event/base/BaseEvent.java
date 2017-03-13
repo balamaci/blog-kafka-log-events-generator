@@ -6,15 +6,13 @@ import io.codearte.jfairy.producer.person.Person;
 import org.slf4j.MDC;
 
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author sbalamaci
  */
 public abstract class BaseEvent implements Runnable {
-
-    private int minWaitMs = 500;
-    private int maxWaitMs = 2500;
 
     private static AtomicLong eventCounter = new AtomicLong(0);
 
@@ -42,11 +40,27 @@ public abstract class BaseEvent implements Runnable {
     }
 
     private void waitBeforeStart() {
-        int waitMs = randomInt(minWaitMs, maxWaitMs);
+        boolean hasCustomWait = config.hasPath(jobName + ".waitBeforeStart");
+
+        long waitMs = 0;
+        if(hasCustomWait) {
+            String fixedWaitKey = jobName + ".waitBeforeStart.fixed";
+            boolean isFixedWait = config.hasPath(jobName + ".waitBeforeStart.fixed");
+            if(isFixedWait) {
+                waitMs = config.getDuration(fixedWaitKey, TimeUnit.MILLISECONDS);
+            } else {
+                int minWait = config.getInt(jobName + ".waitBeforeStart.random.min");
+                int maxWait = config.getInt(jobName + ".waitBeforeStart.random.max");
+
+                waitMs = randomInt(minWait, maxWait);
+            }
+        }
+
         try {
             Thread.sleep(waitMs);
         } catch (InterruptedException ignored) {  }
     }
+
 
     protected String randomUsername() {
         Fairy fairy = Fairy.create();
@@ -58,11 +72,8 @@ public abstract class BaseEvent implements Runnable {
         return ThreadLocalRandom.current().nextInt(minVal, maxVal);
     }
 
-    public void setMinWaitMs(int minWaitMs) {
-        this.minWaitMs = minWaitMs;
+    protected int randomInt(int maxVal) {
+        return ThreadLocalRandom.current().nextInt(maxVal);
     }
 
-    public void setMaxWaitMs(int maxWaitMs) {
-        this.maxWaitMs = maxWaitMs;
-    }
 }

@@ -1,6 +1,8 @@
 package ro.fortsoft.kafka.testdata.generator.event.ecommerce.base;
 
 import com.typesafe.config.Config;
+import net.logstash.logback.argument.StructuredArgument;
+import net.logstash.logback.argument.StructuredArguments;
 import net.logstash.logback.marker.Markers;
 import org.slf4j.Marker;
 import ro.fortsoft.kafka.testdata.generator.event.base.BaseEvent;
@@ -20,11 +22,15 @@ public abstract class BaseECommerceEvent extends BaseEvent {
     }
 
     protected String randomBrowserHash() {
-        return HASH_START_PARTICLE + maxUniqueBrowsers;
+        return HASH_START_PARTICLE + randomInt(maxUniqueBrowsers);
     }
 
     protected Marker randomBrowserHashMarker() {
         return Markers.append("browserHash", HASH_START_PARTICLE + randomBrowserHash());
+    }
+
+    protected StructuredArgument randomBrowserStructuredArg() {
+        return StructuredArguments.value("browserHash", HASH_START_PARTICLE + randomBrowserHash());
     }
 
 }
