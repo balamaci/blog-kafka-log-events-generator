@@ -16,12 +16,12 @@ public abstract class BaseProductEvent extends BaseECommerceEvent {
         this.maxProducts = config.getInt(jobName + ".maxProducts");
     }
 
-    protected Integer randomProduct() {
-        return randomInt(1, maxProducts);
+    protected Long randomProduct() {
+        return randomLong(1, maxProducts);
     }
 
     protected StructuredArgument randomProductStructuredArg() {
-        Integer randomProduct = randomProduct();
+        Long randomProduct = randomProduct();
         return StructuredArguments.value("productId", randomProduct);
     }
 

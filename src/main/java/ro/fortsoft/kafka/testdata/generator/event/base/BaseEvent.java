@@ -49,10 +49,10 @@ public abstract class BaseEvent implements Runnable {
             if(isFixedWait) {
                 waitMs = config.getDuration(fixedWaitKey, TimeUnit.MILLISECONDS);
             } else {
-                int minWait = config.getInt(jobName + ".waitBeforeStart.random.min");
-                int maxWait = config.getInt(jobName + ".waitBeforeStart.random.max");
+                long minWait = config.getDuration(jobName + ".waitBeforeStart.random.min", TimeUnit.MILLISECONDS);
+                long maxWait = config.getDuration(jobName + ".waitBeforeStart.random.max", TimeUnit.MILLISECONDS);
 
-                waitMs = randomInt(minWait, maxWait);
+                waitMs = randomLong(minWait, maxWait);
             }
         }
 
@@ -68,8 +68,8 @@ public abstract class BaseEvent implements Runnable {
         return person.email();
     }
 
-    protected int randomInt(int minVal, int maxVal) {
-        return ThreadLocalRandom.current().nextInt(minVal, maxVal);
+    protected long randomLong(long minVal, long maxVal) {
+        return ThreadLocalRandom.current().nextLong(minVal, maxVal);
     }
 
     protected int randomInt(int maxVal) {
