@@ -5,7 +5,7 @@
   - Running Kafka instance. You can use [kafka-docker](https://github.com/wurstmeister/kafka-docker) as it's a good tutorial on how to set it up.
   - Clone this repository
 ```bash
-$ git clone git@github.com:balamaci/blog-elk-docker
+$ git clone git@github.com:balamaci/blog-kafka-log-events-generator.git
 ```
 
 The [logback.xml](https://github.com/balamaci/blog-kafka-log-events-generator/blob/master/src/main/resources/logback.xml) config is using the [logback-kafka-appender](https://github.com/danielwegener/logback-kafka-appender) to write log events to Kafka.  
@@ -14,7 +14,7 @@ We're using the [logstash-logback-encoder](https://github.com/logstash/logstash-
 ## Code run for generating the events
 Start the Kafka stack as explained in [kafka-docker](https://github.com/wurstmeister/kafka-docker).
 
-**logback.xml** config is using an environment variable 'KAFKA_BOOTSTRAP_SERVERS' so you need to find the IP of the Kafka brokers.(I just grepped for 9092, the default Kafka port 'netstat -pantu | grep 9092')
+**logback.xml** config is using an environment variable 'KAFKA_BOOTSTRAP_SERVERS' to specify the Kafka brokers where logback appender should be writing, so you need to find the IP of the Kafka brokers.(I just grepped for 9092, the default Kafka port 'netstat -pantu | grep 9092')
 It's also using the **'logs'** topic for appending the json log events. You can choose how many partitions to use for the topic directly from the **docker-compose.yml**
 
 ```
@@ -67,9 +67,6 @@ viewProduct {
 }
 ```
 you can create and add your own event by extending **[BaseEvent](https://github.com/balamaci/blog-kafka-log-events-generator/blob/master/src/main/java/ro/fortsoft/kafka/testdata/generator/event/base/BaseEvent.java)** and adding it to the list of jobs.
-
-#### Processing the events
-
 
 
 #### How the events are generated
